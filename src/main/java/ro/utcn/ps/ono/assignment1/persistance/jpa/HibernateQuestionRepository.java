@@ -1,13 +1,16 @@
 package ro.utcn.ps.ono.assignment1.persistance.jpa;
 
 import lombok.RequiredArgsConstructor;
+import ro.utcn.ps.ono.assignment1.entity.Answer;
 import ro.utcn.ps.ono.assignment1.entity.Question;
 import ro.utcn.ps.ono.assignment1.persistance.api.QuestionRepository;
 
 
 import javax.persistence.EntityManager;
+import javax.persistence.Query;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 import java.util.List;
 import java.util.Optional;
 
@@ -40,7 +43,16 @@ public class HibernateQuestionRepository implements QuestionRepository {
 
     @Override
     public Optional<Question> findByTitle(String title) {
-        return Optional.empty();
+        CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+
+        CriteriaQuery<Question> cr = cb.createQuery(Question.class);
+        Root<Question> root = cr.from(Question.class);
+        cr.select(root).where(cb.equal(root.get("title"), title));
+        Query query = entityManager.createQuery(cr);
+        query.setMaxResults(1);
+        List<Question> resultList = query.getResultList();
+
+        return  Optional.of(resultList.get(0));
     }
 
     @Override
@@ -48,11 +60,9 @@ public class HibernateQuestionRepository implements QuestionRepository {
         // the criteria builder is used to create a type-safe query; an alternative would have been
         // to write a JPQL query instead ("SELECT s FROM Student s") or to use named queries
         // https://docs.jboss.org/hibernate/entitymanager/3.5/reference/en/html/querycriteria.html
-        CriteriaBuilder builder = entityManager.getCriteriaBuilder();
+        String queryString = "SELECT q FROM Question q " +
+                "order by q.date,q.totalVotes ";
 
-        CriteriaQuery<Question> query = builder.createQuery(Question.class);
-        query.select(query.from(Question.class));
-
-        return entityManager.createQuery(query).getResultList();
+        return entityManager.createQuery(queryString, Question.class).getResultList();
     }
 }

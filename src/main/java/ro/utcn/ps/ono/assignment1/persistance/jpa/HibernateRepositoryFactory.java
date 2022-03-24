@@ -26,11 +26,21 @@ public class HibernateRepositoryFactory implements RepositoryFactory {
 
     @Override
     public TagRepository createTagRepository() {
-        return null;
+        return new HibernateTagRepository(entityManager);
     }
 
     @Override
     public AnswerRepository createAnswerRepository() {
-        return null;
+        return new HibernateAnswerRepository(entityManager);
+    }
+
+    @Override
+    public VoteAnswerRepository createVoteAnswerRepository() {
+        return new HibernateVoteAnswerRepository(entityManager);
+    }
+
+    @Override
+    public VoteQuestionRepository createVoteQuestionRepository() {
+        return new HibernateVoteQuestionRepository(entityManager);
     }
 }

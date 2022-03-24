@@ -6,6 +6,8 @@ import ro.utcn.ps.ono.assignment1.entity.User;
 import ro.utcn.ps.ono.assignment1.persistance.api.RepositoryFactory;
 import ro.utcn.ps.ono.assignment1.persistance.memory.InMemoryRepositoryFactory;
 
+import java.util.Optional;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class UserServiceTests {
@@ -16,11 +18,20 @@ public class UserServiceTests {
         return factory;
     }
     @Test
+    public void findUserById(){
+        RepositoryFactory factory= createMockedFactory();
+        User user1=new User(3,"username","password");
+        factory.createUserRepository().save(user1);
+        User foundUser=factory.createUserRepository().findUserByUserId(3).get();
+        assertEquals(foundUser, user1);
+    }
+    @Test
     public void findUserByUsername(){
-//        RepositoryFactory factory= createMockedFactory();
-//        User user1=new User(3,"username","password");
-//        factory.createUserRepository().save(user1);
-//        User foundUser=factory.createUserRepository().findUserByUsername("username").get();
-//        assertEquals(foundUser, user1);
+        RepositoryFactory factory= createMockedFactory();
+        User user1=new User(3,"username","password");
+        factory.createUserRepository().save(user1);
+        User foundUser= factory.createUserRepository().findUserByUsername("username").get();
+
+        assertEquals(foundUser, user1);
     }
 }

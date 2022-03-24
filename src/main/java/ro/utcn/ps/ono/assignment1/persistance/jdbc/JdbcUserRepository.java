@@ -3,6 +3,7 @@ package ro.utcn.ps.ono.assignment1.persistance.jdbc;
 import lombok.RequiredArgsConstructor;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
+import ro.utcn.ps.ono.assignment1.entity.Question;
 import ro.utcn.ps.ono.assignment1.entity.User;
 import ro.utcn.ps.ono.assignment1.persistance.api.UserRepository;
 
@@ -33,7 +34,7 @@ public class JdbcUserRepository implements UserRepository {
         template.update("UPDATE users SET username = ?, password = ? WHERE user_id = ?",
                 user.getUsername(),
                 user.getPassword(),
-                user.getUser_id());
+                user.getUserId());
     }
 
 
@@ -42,8 +43,9 @@ public class JdbcUserRepository implements UserRepository {
         List<User> users= template.query("SELECT * FROM users WHERE username = ?",
                 ((resultSet, i) -> new User(
                         resultSet.getInt("user_id"),
-                        resultSet.getString("password"),
-                        resultSet.getString("username")
+                        resultSet.getString("username"),
+                        resultSet.getString("password")
+
                 )),username);
         if (users.isEmpty()) {
             return Optional.empty();
@@ -52,7 +54,7 @@ public class JdbcUserRepository implements UserRepository {
         }
     }
     @Override
-    public List<User> list() {
+    public List<User> findAll() {
         return template.query("SELECT * FROM users",
                 (resultSet, i) -> new User(resultSet.getInt("user_id"),
                         resultSet.getString("username"),
@@ -63,7 +65,7 @@ public class JdbcUserRepository implements UserRepository {
 
 
     @Override
-    public Optional<User> findUserByUser_id(Integer id) {
+    public Optional<User> findUserByUserId(Integer id) {
         List<User> users= template.query("SELECT * FROM users WHERE user_id = ?",
                 ((resultSet, i) -> new User(
                         resultSet.getInt("user_id"),
@@ -80,6 +82,13 @@ public class JdbcUserRepository implements UserRepository {
     @Override
     public User save(User user) {
         return null;
+    }
+
+
+
+    @Override
+    public void remove(User user) {
+
     }
 
 

@@ -1,13 +1,14 @@
 package ro.utcn.ps.ono.assignment1.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
+
 import javax.persistence.*;
+import java.util.List;
 
 @Getter
 @Setter
+@ToString
+@EqualsAndHashCode
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
@@ -17,8 +18,16 @@ public class Tag {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String name;
+
+
+
+
     public Tag(String name){
         this.name=name;
     }
 
+    public Tag(int tag_id, String name) {
+        this.name=name;
+        this.id=tag_id;
+    }
 }

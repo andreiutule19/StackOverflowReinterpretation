@@ -22,7 +22,7 @@ public class TagService {
 
     @Transactional
     public List<Integer> findByIdQT(Integer id) {
-        return factory.createTagRepository().findByIdQT(id);
+        return factory.createTagRepository().findTagByQuestion_question_id(id);
     }
 
     @Transactional

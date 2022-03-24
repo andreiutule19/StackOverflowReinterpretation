@@ -29,5 +29,15 @@ public class InMemoryRepositoryFactory implements RepositoryFactory {
         return null;
     }
 
+    @Override
+    public VoteAnswerRepository createVoteAnswerRepository() {
+        return null;
+    }
+
+    @Override
+    public VoteQuestionRepository createVoteQuestionRepository() {
+        return null;
+    }
+
 
 }

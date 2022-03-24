@@ -1,11 +1,12 @@
 package ro.utcn.ps.ono.assignment1.entity;
 import lombok.*;
 import javax.persistence.*;
-import java.sql.Date;
+import java.util.Date;
 
 
 @Getter
 @Setter
+@EqualsAndHashCode
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
@@ -18,9 +19,17 @@ public class Answer {
     private Integer answerId;
     private String bodyAnswer;
     private Date dateTime;
-
-    private Integer questionId;
+    private Integer myQuestion;
     private Integer userId;
+
+    @Column(columnDefinition ="int default 0")
+    private Integer upVote = 0;
+    @Column(columnDefinition ="int default 0")
+    private Integer downVote = 0;
+
+    @Column(columnDefinition ="int default 0")
+    private Integer totalVotes= 0;
+
 
 
     public Answer(String bodyAnswer) {

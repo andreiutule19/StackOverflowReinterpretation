@@ -3,6 +3,7 @@ package ro.utcn.ps.ono.assignment1.persistance.jdbc;
 import lombok.RequiredArgsConstructor;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
+import ro.utcn.ps.ono.assignment1.entity.Question;
 import ro.utcn.ps.ono.assignment1.entity.Tag;
 import ro.utcn.ps.ono.assignment1.persistance.api.TagRepository;
 
@@ -57,11 +58,21 @@ public class JdbcTagRepository implements TagRepository {
     }
 
     @Override
-    public List<Integer> findByIdQT(int id) {
+    public List<Integer> findTagByQuestion_question_id(int id) {
         List<Integer> tags = template.query("SELECT question_question_id FROM question_tags WHERE tags_tag_id = ?",
                 ((resultSet, i) -> new Integer(resultSet.getInt("question_question_id"))),
                 id);
         return tags;
+    }
+
+    @Override
+    public List<Tag> findAll() {
+        return null;
+    }
+
+    @Override
+    public void remove(Tag tag) {
+
     }
 
 

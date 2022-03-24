@@ -31,6 +31,16 @@ public class JdbcRepositoryFactory implements RepositoryFactory {
 
     @Override
     public AnswerRepository createAnswerRepository() {
+        return new JdbcAnswerRepository(template);
+    }
+
+    @Override
+    public VoteAnswerRepository createVoteAnswerRepository() {
+        return null;
+    }
+
+    @Override
+    public VoteQuestionRepository createVoteQuestionRepository() {
         return null;
     }
 

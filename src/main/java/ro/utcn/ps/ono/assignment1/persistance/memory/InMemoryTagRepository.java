@@ -31,8 +31,19 @@ public class InMemoryTagRepository implements TagRepository {
     }
 
     @Override
-    public List<Integer> findByIdQT(int id) {
+    public List<Integer> findTagByQuestion_question_id(int id) {
         return new ArrayList<>();
     }
+
+    @Override
+    public List<Tag> findAll() {
+        return null;
+    }
+
+    @Override
+    public void remove(Tag tag) {
+
+    }
+
 
 }

@@ -4,7 +4,6 @@ import lombok.AllArgsConstructor;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import ro.utcn.ps.ono.assignment1.entity.Answer;
-import ro.utcn.ps.ono.assignment1.entity.Question;
 import ro.utcn.ps.ono.assignment1.persistance.api.AnswerRepository;
 
 import java.util.HashMap;
@@ -28,7 +27,7 @@ public class JdbcAnswerRepository implements AnswerRepository {
             update(answer);
         } else {
             Integer id = insert(answer);
-            answer.setQuestionId(id);
+            answer.setAnswerId(id);
         }
 
         return answer;
@@ -41,9 +40,13 @@ public class JdbcAnswerRepository implements AnswerRepository {
                         resultSet.getInt("question_id"),
                         resultSet.getString("body_answer"),
                         resultSet.getDate("date"),
-                        resultSet.getInt("question_id"),
-                        resultSet.getInt("user_id")
-                    )),
+                        resultSet.getInt("my_question"),
+                        resultSet.getInt("user_id"),
+                        resultSet.getInt("up_vote"),
+                        resultSet.getInt("down_vote"),
+                        resultSet.getInt("total_votes")
+
+                )),
                 id);
 
         if (questions.isEmpty()) {
@@ -67,13 +70,22 @@ public class JdbcAnswerRepository implements AnswerRepository {
     public List<Answer> findAll() {
         return template.query("SELECT * FROM answers  ORDER BY date ",
                 (resultSet, i) -> new Answer(
-                        resultSet.getInt("question_id"),
+                        resultSet.getInt("answer_id"),
                         resultSet.getString("body_answer"),
                         resultSet.getDate("date"),
-                        resultSet.getInt("question_id"),
-                        resultSet.getInt("user_id")
+                        resultSet.getInt("my_question"),
+                        resultSet.getInt("user_id"),
+                        resultSet.getInt("up_vote"),
+                        resultSet.getInt("down_vote"),
+                        resultSet.getInt("total_votes")
                 ));
     }
+
+    @Override
+    public Answer findByAnswerIdAndMyQuestion(Integer answerId, Integer question) {
+        return null;
+    }
+
 
     private int insert(Answer answer) {
         SimpleJdbcInsert insert = new SimpleJdbcInsert(template);
@@ -82,7 +94,7 @@ public class JdbcAnswerRepository implements AnswerRepository {
         Map<String, Object> data = new HashMap<>();
         data.put("body_answer", answer.getBodyAnswer());
         data.put("date", answer.getDateTime());
-        data.put("question_id", answer.getQuestionId());
+        data.put("my_question", answer.getMyQuestion());
         data.put("user_id", answer.getUserId());
         return insert.executeAndReturnKey(data).intValue();
     }

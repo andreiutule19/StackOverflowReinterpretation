@@ -1,5 +1,6 @@
 package ro.utcn.ps.ono.assignment1.persistance.memory;
 
+import ro.utcn.ps.ono.assignment1.entity.Question;
 import ro.utcn.ps.ono.assignment1.entity.User;
 import ro.utcn.ps.ono.assignment1.persistance.api.UserRepository;
 
@@ -15,24 +16,30 @@ public class InMemoryUserRepository implements UserRepository {
     }
 
     @Override
-    public List<User> list() {
+    public List<User> findAll() {
         return new ArrayList<>(data.values());
     }
 
     @Override
-    public Optional<User> findUserByUser_id(Integer id) {
+    public Optional<User> findUserByUserId(Integer id) {
         return Optional.ofNullable(data.get(id));
     }
 
     @Override
     public synchronized User save(User user) {
-        if(user.getUser_id() != null) {
-            data.put(user.getUser_id(), user);
+        if(user.getUserId() != null) {
+            data.put(user.getUserId(), user);
         } else {
-            user.setUser_id(currentId++);
-            data.put(user.getUser_id(), user);
+            user.setUserId(currentId++);
+            data.put(user.getUserId(), user);
         }
         return user;
     }
+
+    @Override
+    public void remove(User user) {
+
+    }
+
 
 }

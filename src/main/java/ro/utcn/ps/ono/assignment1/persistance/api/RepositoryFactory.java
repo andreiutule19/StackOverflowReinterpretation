@@ -12,4 +12,6 @@ public interface RepositoryFactory {
     UserRepository createUserRepository();
     TagRepository createTagRepository();
     AnswerRepository createAnswerRepository();
+    VoteAnswerRepository createVoteAnswerRepository();
+    VoteQuestionRepository createVoteQuestionRepository();
 }

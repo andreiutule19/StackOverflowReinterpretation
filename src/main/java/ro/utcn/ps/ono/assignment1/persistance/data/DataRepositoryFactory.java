@@ -3,10 +3,7 @@ package ro.utcn.ps.ono.assignment1.persistance.data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Component;
-import ro.utcn.ps.ono.assignment1.persistance.api.AnswerRepository;
-import ro.utcn.ps.ono.assignment1.persistance.api.RepositoryFactory;
-import ro.utcn.ps.ono.assignment1.persistance.api.TagRepository;
-import ro.utcn.ps.ono.assignment1.persistance.api.UserRepository;
+import ro.utcn.ps.ono.assignment1.persistance.api.*;
 
 
 @RequiredArgsConstructor
@@ -14,7 +11,11 @@ import ro.utcn.ps.ono.assignment1.persistance.api.UserRepository;
 @ConditionalOnProperty(name = "repository-type", havingValue = "DATA")
 public class DataRepositoryFactory implements RepositoryFactory {
 	private final DataQuestionRepository dataQuestionRepository;
-
+	private final DataAnswerRepository dataAnswerRepository;
+	private final DataUserRepository dataUserRepository;
+	private final DataTagRepository dataTagRepository;
+	private final DataVoteAnswerRepository dataVoteAnswerRepository;
+	private final DataVoteQuestionRepository dataVoteQuestionRepository;
 	@Override
 	public DataQuestionRepository createQuestionRepository() {
 		return dataQuestionRepository;
@@ -22,7 +23,7 @@ public class DataRepositoryFactory implements RepositoryFactory {
 
 	@Override
 	public UserRepository createUserRepository() {
-		return null;
+		return dataUserRepository;
 	}
 
 	@Override
@@ -32,6 +33,16 @@ public class DataRepositoryFactory implements RepositoryFactory {
 
 	@Override
 	public AnswerRepository createAnswerRepository() {
-		return null;
+		return dataAnswerRepository;
+	}
+
+	@Override
+	public VoteAnswerRepository createVoteAnswerRepository() {
+		return dataVoteAnswerRepository;
+	}
+
+	@Override
+	public VoteQuestionRepository createVoteQuestionRepository() {
+		return dataVoteQuestionRepository;
 	}
 }

@@ -1,6 +1,7 @@
 package ro.utcn.ps.ono.assignment1.entity;
 
 import lombok.*;
+import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -20,11 +21,18 @@ public class Question {
     private Integer questionId;
     private String title;
     private String body;
-    private int author;
+    private Integer author;
     private Date date;
 
-   @ManyToMany(fetch = FetchType.EAGER)
+    @Column(columnDefinition ="int default 0")
+    private Integer upVote=new Integer(0);
+    @Column(columnDefinition ="int default 0")
+    private Integer downVote=new Integer(0);
+    private Integer totalVotes=upVote.intValue()-downVote.intValue();
+
+   @ManyToMany
    @JoinTable(name = "question_tags")
+   @ToString.Exclude
    private List<Tag> tags;
 
     public Question(String title, String body) {
@@ -38,7 +46,12 @@ public class Question {
         this.author=author;
         this.questionId=integer;
     }
-    @OneToMany
-    @JoinTable
+
+    @OneToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
     private List<Answer> answers;
+
+
+    public String toString2(){
+        return "Question = : " + this.getQuestionId()+ " Title = "+this.getTitle()+" Body= "+ this.getBody() +" Tag-uri = "+this.getTags();
+    }
 }

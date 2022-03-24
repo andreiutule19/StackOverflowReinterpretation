@@ -1,8 +1,9 @@
 package ro.utcn.ps.ono.assignment1.service;
 
 import lombok.Getter;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.Setter;
 import org.springframework.stereotype.Service;
+import ro.utcn.ps.ono.assignment1.entity.Question;
 import ro.utcn.ps.ono.assignment1.entity.User;
 import ro.utcn.ps.ono.assignment1.exception.QuestionNotFoundException;
 import ro.utcn.ps.ono.assignment1.persistance.api.RepositoryFactory;
@@ -12,10 +13,13 @@ import javax.transaction.Transactional;
 
 @Getter
 @Service
+
 public class UserServices {
     private final RepositoryFactory factory;
     private boolean userLog = false;
+    private Integer authorId=null;
     private String currentUser;
+
     public UserServices(RepositoryFactory factory) {
         this.factory = factory;
     }
@@ -27,7 +31,7 @@ public class UserServices {
     }
     @Transactional
     public User findUserByUser_id(Integer id) {
-        return factory.createUserRepository().findUserByUser_id(id).orElseThrow(QuestionNotFoundException::new);
+        return factory.createUserRepository().findUserByUserId(id).orElseThrow(QuestionNotFoundException::new);
     }
     @Transactional
     public void login(String username, String password){
@@ -47,11 +51,18 @@ public class UserServices {
                 System.out.println("Parola gresita!");
             }
         }
+       authorId = new Integer(user.getUserId());
 
+    }
+
+    @Transactional
+    public User insert(User user) {
+        return factory.createUserRepository().save(user);
     }
     @Transactional
     public void logout(){
         userLog=false;
+        authorId = null;
     }
 
 

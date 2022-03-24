@@ -26,12 +26,12 @@ public class QuestionSeed implements CommandLineRunner {
 
         int COUNT = 110;
 
-        if (repository.findAll().isEmpty()) {
-            for (int i = 100; i < COUNT; i++) {
-                Question question = new Question("Title" + i, "Body" + i);
-                repository.save(question);
-            }
-        }
+//        if (repository.findAll().isEmpty()) {
+//            for (int i = 100; i < COUNT; i++) {
+//                Question question = new Question("Title" + i, "Body" + i);
+//                repository.save(question);
+//            }
+//        }
     }
 }
 
