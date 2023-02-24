@@ -1,16 +1,12 @@
 package ro.utcn.ps.ono.assignment1.entity;
 
 import lombok.*;
-import org.hibernate.annotations.ColumnDefault;
-
 import javax.persistence.*;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 @Getter
 @Setter
 @ToString
-@EqualsAndHashCode
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
@@ -21,34 +17,41 @@ public class Question {
     private Integer questionId;
     private String title;
     private String body;
-    private Integer author;
+    @Column(name="user_id")
+    private Integer userId;
     private Date date;
 
-    @Column(columnDefinition ="int default 0")
-    private Integer upVote=new Integer(0);
-    @Column(columnDefinition ="int default 0")
-    private Integer downVote=new Integer(0);
-    private Integer totalVotes=upVote.intValue()-downVote.intValue();
+    @OneToMany(cascade = {CascadeType.PERSIST})
+    @JoinColumn(name="question_id")
+    List<VoteQuestion> votes;
 
-   @ManyToMany
-   @JoinTable(name = "question_tags")
+    @Column(columnDefinition ="int default 0")
+    private Integer totalVotes;
+
+   @ManyToMany(cascade = {CascadeType.PERSIST})
+   @JoinTable(name = "question_tags",joinColumns=@JoinColumn(name="question_id"),
+           inverseJoinColumns =@JoinColumn(name="tag_id")
+   )
    @ToString.Exclude
    private List<Tag> tags;
+
+
+   @OneToMany(fetch = FetchType.EAGER,cascade = {CascadeType.PERSIST})
+   @JoinColumn(name = "question_id")
+   private List<Answer> answers=new ArrayList<>();
+
 
     public Question(String title, String body) {
         this.title = title;
         this.body = body;
     }
-    public Question(Integer integer,String title, String body, Integer author,Date date) {
+    public Question(Integer integer,String title, String body, Integer userId,Date date) {
         this.title = title;
         this.body = body;
         this.date =date;
-        this.author=author;
+        this.userId=userId;
         this.questionId=integer;
     }
-
-    @OneToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
-    private List<Answer> answers;
 
 
     public String toString2(){

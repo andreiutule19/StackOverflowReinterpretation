@@ -1,14 +1,14 @@
 package ro.utcn.ps.ono.assignment1.persistance.jpa;
 
 import lombok.AllArgsConstructor;
-import ro.utcn.ps.ono.assignment1.entity.Answer;
-import ro.utcn.ps.ono.assignment1.entity.VoteAnswer;
 import ro.utcn.ps.ono.assignment1.entity.VoteQuestion;
 import ro.utcn.ps.ono.assignment1.persistance.api.VoteQuestionRepository;
 
 import javax.persistence.EntityManager;
+import javax.persistence.Query;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 import java.util.List;
 import java.util.Optional;
 
@@ -45,8 +45,19 @@ public class HibernateVoteQuestionRepository implements VoteQuestionRepository {
     }
 
     @Override
-    public Optional<VoteQuestion> findByVoteQuestionId(Integer userId) {
-        return Optional.ofNullable(entityManager.find(VoteQuestion.class, userId));
+    public Optional<VoteQuestion> findByVoteQuestionId(Integer voteQuestionId) {
+        return Optional.ofNullable(entityManager.find(VoteQuestion.class, voteQuestionId));
+    }
+
+    @Override
+    public List<VoteQuestion> findByQuestionId(Integer questionId) {
+        CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+        CriteriaQuery<VoteQuestion> cr = cb.createQuery(VoteQuestion.class);
+        Root<VoteQuestion> root = cr.from(VoteQuestion.class);
+        cr.select(root).where(cb.equal(root.get("questionId"), questionId));
+        Query query = entityManager.createQuery(cr);
+        List<VoteQuestion> resultList = query.getResultList();
+        return  resultList;
     }
 
     @Override

@@ -42,8 +42,6 @@ public class JdbcAnswerRepository implements AnswerRepository {
                         resultSet.getDate("date"),
                         resultSet.getInt("my_question"),
                         resultSet.getInt("user_id"),
-                        resultSet.getInt("up_vote"),
-                        resultSet.getInt("down_vote"),
                         resultSet.getInt("total_votes")
 
                 )),
@@ -75,16 +73,17 @@ public class JdbcAnswerRepository implements AnswerRepository {
                         resultSet.getDate("date"),
                         resultSet.getInt("my_question"),
                         resultSet.getInt("user_id"),
-                        resultSet.getInt("up_vote"),
-                        resultSet.getInt("down_vote"),
+//                        resultSet.getInt("up_vote"),
+//                        resultSet.getInt("down_vote"),
                         resultSet.getInt("total_votes")
                 ));
     }
 
     @Override
-    public Answer findByAnswerIdAndMyQuestion(Integer answerId, Integer question) {
+    public List<Answer> findByQuestionId(Integer questionId) {
         return null;
     }
+
 
 
     private int insert(Answer answer) {
@@ -94,7 +93,7 @@ public class JdbcAnswerRepository implements AnswerRepository {
         Map<String, Object> data = new HashMap<>();
         data.put("body_answer", answer.getBodyAnswer());
         data.put("date", answer.getDateTime());
-        data.put("my_question", answer.getMyQuestion());
+        data.put("my_question", answer.getQuestionId());
         data.put("user_id", answer.getUserId());
         return insert.executeAndReturnKey(data).intValue();
     }

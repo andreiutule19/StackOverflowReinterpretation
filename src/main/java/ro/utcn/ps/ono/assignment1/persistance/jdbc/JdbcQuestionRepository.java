@@ -101,7 +101,7 @@ public class JdbcQuestionRepository implements QuestionRepository {
         Map<String, Object> data = new HashMap<>();
         data.put("title", question.getTitle());
         data.put("body", question.getBody());
-        data.put("author", question.getAuthor());
+        data.put("author", question.getUserId());
         data.put("date", question.getDate());
         return insert.executeAndReturnKey(data).intValue();
     }

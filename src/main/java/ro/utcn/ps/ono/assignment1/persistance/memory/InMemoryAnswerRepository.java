@@ -1,7 +1,6 @@
 package ro.utcn.ps.ono.assignment1.persistance.memory;
 
 import ro.utcn.ps.ono.assignment1.entity.Answer;
-import ro.utcn.ps.ono.assignment1.entity.Question;
 import ro.utcn.ps.ono.assignment1.persistance.api.AnswerRepository;
 
 import java.util.HashMap;
@@ -41,8 +40,9 @@ public class InMemoryAnswerRepository implements AnswerRepository {
     }
 
     @Override
-    public Answer findByAnswerIdAndMyQuestion(Integer answerId, Integer question) {
+    public List<Answer> findByQuestionId(Integer questionId) {
         return null;
     }
+
 
 }

@@ -1,14 +1,14 @@
 package ro.utcn.ps.ono.assignment1.persistance.jpa;
 
 import lombok.AllArgsConstructor;
-import ro.utcn.ps.ono.assignment1.entity.Answer;
-import ro.utcn.ps.ono.assignment1.entity.User;
 import ro.utcn.ps.ono.assignment1.entity.VoteAnswer;
 import ro.utcn.ps.ono.assignment1.persistance.api.VoteAnswerRepository;
 
 import javax.persistence.EntityManager;
+import javax.persistence.Query;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 import java.util.List;
 import java.util.Optional;
 
@@ -18,10 +18,8 @@ public class HibernateVoteAnswerRepository implements VoteAnswerRepository {
     @Override
     public List<VoteAnswer> findAll() {
         CriteriaBuilder builder = entityManager.getCriteriaBuilder();
-
         CriteriaQuery<VoteAnswer> query = builder.createQuery(VoteAnswer.class);
         query.select(query.from(VoteAnswer.class));
-
         return entityManager.createQuery(query).getResultList();
     }
 
@@ -44,11 +42,20 @@ public class HibernateVoteAnswerRepository implements VoteAnswerRepository {
     }
 
     @Override
-    public Optional<VoteAnswer> findByVoteAnswerId(Integer userId) {
-
-        return Optional.ofNullable(entityManager.find(VoteAnswer.class, userId));
+    public List<VoteAnswer> findByAnswerId(Integer answerId) {
+        CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+        CriteriaQuery<VoteAnswer> cr = cb.createQuery(VoteAnswer.class);
+        Root<VoteAnswer> root = cr.from(VoteAnswer.class);
+        cr.select(root).where(cb.equal(root.get("answerId"), answerId));
+        Query query = entityManager.createQuery(cr);
+        List<VoteAnswer> resultList = query.getResultList();
+        return  resultList;
     }
 
+    @Override
+    public Optional<VoteAnswer> findByVoteAnswerId(int voteAnswerId) {
+        return Optional.ofNullable(entityManager.find(VoteAnswer.class, voteAnswerId));
+    }
     @Override
     public Optional<VoteAnswer> findByAnswerIdAndUserId(Integer userId, Integer answerId) {
         String queryString = "SELECT v FROM VoteAnswer v " +

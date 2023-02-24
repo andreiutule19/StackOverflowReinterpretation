@@ -6,19 +6,24 @@ import org.springframework.stereotype.Component;
 import ro.utcn.ps.ono.assignment1.persistance.api.*;
 
 
+
 @RequiredArgsConstructor
 @Component
 @ConditionalOnProperty(name = "repository-type", havingValue = "DATA")
 public class DataRepositoryFactory implements RepositoryFactory {
-	private final DataQuestionRepository dataQuestionRepository;
+//	private final DataQuestionRepository dataQuestionRepository;
 	private final DataAnswerRepository dataAnswerRepository;
 	private final DataUserRepository dataUserRepository;
-	private final DataTagRepository dataTagRepository;
 	private final DataVoteAnswerRepository dataVoteAnswerRepository;
 	private final DataVoteQuestionRepository dataVoteQuestionRepository;
+//	@Override
+//	public DataQuestionRepository createQuestionRepository() {
+//		return dataQuestionRepository;
+//	}
+
 	@Override
-	public DataQuestionRepository createQuestionRepository() {
-		return dataQuestionRepository;
+	public QuestionRepository createQuestionRepository() {
+		return null;
 	}
 
 	@Override
@@ -33,7 +38,7 @@ public class DataRepositoryFactory implements RepositoryFactory {
 
 	@Override
 	public AnswerRepository createAnswerRepository() {
-		return dataAnswerRepository;
+		return null;
 	}
 
 	@Override

@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 import ro.utcn.ps.ono.assignment1.persistance.api.*;
 
 
+
 @RequiredArgsConstructor
 @Component
 @ConditionalOnProperty(name = "repository-type", havingValue = "JDBC")

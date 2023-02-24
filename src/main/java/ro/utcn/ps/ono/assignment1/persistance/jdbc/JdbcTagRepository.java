@@ -3,7 +3,6 @@ package ro.utcn.ps.ono.assignment1.persistance.jdbc;
 import lombok.RequiredArgsConstructor;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
-import ro.utcn.ps.ono.assignment1.entity.Question;
 import ro.utcn.ps.ono.assignment1.entity.Tag;
 import ro.utcn.ps.ono.assignment1.persistance.api.TagRepository;
 

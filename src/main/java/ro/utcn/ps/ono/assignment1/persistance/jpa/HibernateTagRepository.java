@@ -49,19 +49,19 @@ public class HibernateTagRepository implements TagRepository {
 
     @Override
     public List findTagByQuestion_question_id(int id) {
+//        String query ="SELECT q.questionId FROM Question q INNER JOIN Tag t ON q.questionId = t.questionId  WHERE t.id LIKE : id";
+//
+//        return entityManager.createQuery(query).setParameter("id", id).getResultList();
 
-        return entityManager.createQuery("SELECT q.questionId FROM Question q INNER JOIN Tag t ON q.questionId = t.questionId  WHERE t.id LIKE : id").setParameter("id", id).getResultList();
-
+        return null;
     }
 
 
     @Override
     public List<Tag> findAll() {
         CriteriaBuilder builder = entityManager.getCriteriaBuilder();
-
         CriteriaQuery<Tag> query = builder.createQuery(Tag.class);
         query.select(query.from(Tag.class));
-
         return entityManager.createQuery(query).getResultList();
     }
 

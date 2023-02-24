@@ -2,11 +2,12 @@ package ro.utcn.ps.ono.assignment1.persistance.jpa;
 
 import lombok.AllArgsConstructor;
 import ro.utcn.ps.ono.assignment1.entity.Answer;
-import ro.utcn.ps.ono.assignment1.entity.Question;
 import ro.utcn.ps.ono.assignment1.persistance.api.AnswerRepository;
 import javax.persistence.EntityManager;
+import javax.persistence.Query;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 import java.util.List;
 import java.util.Optional;
 
@@ -40,20 +41,21 @@ public class HibernateAnswerRepository implements AnswerRepository {
 
     @Override
     public List<Answer> findAll() {
-        String queryString = "SELECT a FROM Answer a " +
-                "order by a.totalVotes ";
-
-        return entityManager.createQuery(queryString, Answer.class).getResultList();
+        CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Answer> cr = cb.createQuery(Answer.class);
+        cr.select(cr.from(Answer.class));
+        return entityManager.createQuery(cr).getResultList();
     }
 
     @Override
-    public Answer findByAnswerIdAndMyQuestion(Integer answerId, Integer myQuestion) {
-        String queryString = "SELECT a FROM Answer a " +
-                "WHERE a.answerId = :answerId AND a.myQuestion = :myQuestion";
-
-        return entityManager.createQuery(queryString,Answer.class)
-                .setParameter("answerId", answerId)
-                .setParameter("myQuestion",myQuestion).getResultList().get(0);
+    public List<Answer> findByQuestionId( Integer questionId) {
+        CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Answer> cr = cb.createQuery(Answer.class);
+        Root<Answer> root = cr.from(Answer.class);
+        cr.select(root).where(cb.equal(root.get("questionId"), questionId));
+        Query query = entityManager.createQuery(cr);
+        List<Answer> resultList = query.getResultList();
+        return  resultList;
     }
 
 }

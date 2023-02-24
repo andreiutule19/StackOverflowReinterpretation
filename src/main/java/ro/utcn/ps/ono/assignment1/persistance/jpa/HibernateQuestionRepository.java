@@ -1,7 +1,6 @@
 package ro.utcn.ps.ono.assignment1.persistance.jpa;
 
 import lombok.RequiredArgsConstructor;
-import ro.utcn.ps.ono.assignment1.entity.Answer;
 import ro.utcn.ps.ono.assignment1.entity.Question;
 import ro.utcn.ps.ono.assignment1.persistance.api.QuestionRepository;
 
@@ -57,12 +56,9 @@ public class HibernateQuestionRepository implements QuestionRepository {
 
     @Override
     public List<Question> findAll() {
-        // the criteria builder is used to create a type-safe query; an alternative would have been
-        // to write a JPQL query instead ("SELECT s FROM Student s") or to use named queries
-        // https://docs.jboss.org/hibernate/entitymanager/3.5/reference/en/html/querycriteria.html
-        String queryString = "SELECT q FROM Question q " +
-                "order by q.date,q.totalVotes ";
-
-        return entityManager.createQuery(queryString, Question.class).getResultList();
+        CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Question> cr = cb.createQuery(Question.class);
+        cr.select(cr.from(Question.class));
+        return entityManager.createQuery(cr).getResultList();
     }
 }

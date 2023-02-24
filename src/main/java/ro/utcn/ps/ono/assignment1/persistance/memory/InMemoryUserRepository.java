@@ -1,6 +1,5 @@
 package ro.utcn.ps.ono.assignment1.persistance.memory;
 
-import ro.utcn.ps.ono.assignment1.entity.Question;
 import ro.utcn.ps.ono.assignment1.entity.User;
 import ro.utcn.ps.ono.assignment1.persistance.api.UserRepository;
 

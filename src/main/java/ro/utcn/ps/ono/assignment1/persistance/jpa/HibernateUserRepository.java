@@ -1,11 +1,7 @@
 package ro.utcn.ps.ono.assignment1.persistance.jpa;
 
 import lombok.AllArgsConstructor;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
 
-import org.hibernate.cfg.Configuration;
-import ro.utcn.ps.ono.assignment1.entity.Question;
 import ro.utcn.ps.ono.assignment1.entity.User;
 import ro.utcn.ps.ono.assignment1.persistance.api.UserRepository;
 import javax.persistence.EntityManager;
@@ -46,10 +42,8 @@ public class HibernateUserRepository implements UserRepository {
         // to write a JPQL query instead ("SELECT s FROM Student s") or to use named queries
         // https://docs.jboss.org/hibernate/entitymanager/3.5/reference/en/html/querycriteria.html
         CriteriaBuilder builder = entityManager.getCriteriaBuilder();
-
         CriteriaQuery<User> query = builder.createQuery(User.class);
         query.select(query.from(User.class));
-
         return entityManager.createQuery(query).getResultList();
     }
 

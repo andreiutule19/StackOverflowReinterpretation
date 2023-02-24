@@ -6,8 +6,6 @@ import ro.utcn.ps.ono.assignment1.entity.User;
 import ro.utcn.ps.ono.assignment1.persistance.api.RepositoryFactory;
 import ro.utcn.ps.ono.assignment1.persistance.memory.InMemoryRepositoryFactory;
 
-import java.util.Optional;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class UserServiceTests {

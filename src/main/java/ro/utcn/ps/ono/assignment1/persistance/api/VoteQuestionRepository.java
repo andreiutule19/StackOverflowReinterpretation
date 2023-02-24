@@ -9,7 +9,8 @@ public interface VoteQuestionRepository {
     List<VoteQuestion> findAll();
     VoteQuestion save(VoteQuestion voteQuestion);
     void remove(VoteQuestion voteQuestion);
-    Optional<VoteQuestion> findByVoteQuestionId(Integer userId);
+    Optional<VoteQuestion> findByVoteQuestionId(Integer voteQuestionId);
+    List<VoteQuestion> findByQuestionId(Integer questionId);
     Optional<VoteQuestion> findByQuestionIdAndUserId(Integer userId,Integer questionId);
 }
 

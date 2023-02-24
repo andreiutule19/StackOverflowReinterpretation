@@ -17,6 +17,13 @@ public class VoteAnswer {
     @Column(name ="vote_answer_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer voteAnswerId;
+    @Column(name="answer_id")
     private Integer answerId;
+    @Column(name="user_id")
     private Integer userId;
+    private Boolean liked;
+
+
+
+
 }

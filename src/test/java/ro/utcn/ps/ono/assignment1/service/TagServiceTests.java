@@ -1,7 +1,6 @@
 package ro.utcn.ps.ono.assignment1.service;
 import org.junit.jupiter.api.Test;
 import ro.utcn.ps.ono.assignment1.entity.Tag;
-import ro.utcn.ps.ono.assignment1.entity.User;
 import ro.utcn.ps.ono.assignment1.persistance.api.RepositoryFactory;
 import ro.utcn.ps.ono.assignment1.persistance.memory.InMemoryRepositoryFactory;
 

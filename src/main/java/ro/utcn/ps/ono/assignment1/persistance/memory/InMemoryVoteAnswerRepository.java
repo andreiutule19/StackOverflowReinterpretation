@@ -31,12 +31,17 @@ public class InMemoryVoteAnswerRepository implements VoteAnswerRepository {
     }
 
     @Override
-    public Optional<VoteAnswer> findByVoteAnswerId(Integer userId) {
+    public List<VoteAnswer> findByAnswerId(Integer userId) {
         return null;
     }
 
     @Override
     public Optional<VoteAnswer> findByAnswerIdAndUserId(Integer userId, Integer questionId) {
+        return Optional.empty();
+    }
+
+    @Override
+    public Optional<VoteAnswer> findByVoteAnswerId(int id) {
         return Optional.empty();
     }
 }
